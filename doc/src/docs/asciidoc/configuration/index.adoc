@@ -1,0 +1,6 @@
+Configuration
+=============
+
+This section shows how to configure gprdb using `application.yml`.
+
+(to be written)

@@ -1,0 +1,8 @@
+Deployment
+==========
+
+This section shows deployment options of gprdb.
+
+include::docker.adoc[]
+
+include::manual.adoc[]

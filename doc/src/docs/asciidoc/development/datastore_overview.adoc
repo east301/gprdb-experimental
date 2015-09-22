@@ -1,0 +1,47 @@
+Overview of internal datastore
+------------------------------
+
+The figure below shows structure of internal datastore of gprdb.
+
+[ditaa]
+....
+            +--------------------------------------------------------------------------------------------------------+
+            |                                           gprdb application                                            |
+            +--------------------------------------------------------------------------------------------------------+
+                      ^                   ^                    ^                    ^                     ^
+                      |                   |                    |                    |                     |
+                      v                   v                    v                    v                     v
+            +------------------+ +------------------+ +------------------+ +------------------+ +--------------------+
+ optimized  |     gene name    | |  gene annotation | | full text search | |   triple store   | |                    |
+ datastore  |       (KVS)      | |       (KVS)      | |     (Lucene)     | |       (RDF)      | | gene-pair relation |
+            +------------------+ +------------------+ +------------------+ +------------------+ |      matrix        |
+            +---------------------------------------------------------------------------------+ |   (binary file)    |
+   master   |                                 master datastore                                | |                    |
+ datastore  |                                      (RDB)                                      | |                    |
+            +---------------------------------------------------------------------------------+ +--------------------+
+....
+
+gene-pair relation matrix data is written into a special binary file.
+Current implementation of gprdb uses https://www.hdfgroup.org/HDF5/[HDF5] format file.
+
+[NOTE]
+====
+*Why gprdb use binary files to store gene-pair relation matrix?* +
+A lot of databases systems have been developed in the world, however,
+none of them seems to be able to handle huge matrix data effiently.
+====
+
+
+Other kinds of data, for example, gene name and annotation, is imported to master datastore first,
+and then, copied to optimized datastore from master datastore.
+Current implementation uses https://en.wikipedia.org/wiki/Relational_database[RDB]
+via https://en.wikipedia.org/wiki/Java_Persistence_API[JPA] as master datastore,
+and http://www.mapdb.org/[MapDB], https://lucene.apache.org/core/[Apache Lucene]
+via http://hibernate.org/search/[Hibernate Search], and http://rdf4j.org/[Sesame] as optimized datastore respectively.
+
+[NOTE]
+====
+*Why gprdb don't use data stored in RDB in directly?* +
+gprdb focus on peformance. Queries to be issued to RDB to build relation table etc. may takes a lot of time.
+To improve performance, gprdb copies subset of master datastore to a datastore which is faster to query by gene ID.
+====

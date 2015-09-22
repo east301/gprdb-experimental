@@ -1,0 +1,12 @@
+Code convention
+---------------
+
+Naming convention
+~~~~~~~~~~~~~~~~~
+
+(to be written)
+
+Coding style
+~~~~~~~~~~~~
+
+(to be written)

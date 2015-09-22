@@ -1,0 +1,31 @@
+{% extends "layout" %}
+
+{% block main %}
+  <div class="large-12 columns">
+    <h1>Error</h1>
+    <table>
+      <tbody>
+        <tr>
+          <th>URL</th>
+          <td>{{ url }}</td>
+        </tr>
+        <tr>
+          <th>status</th>
+          <td>{{ status }}</td>
+        </tr>
+        <tr>
+          <th>message</th>
+          <td>{{ message }}</td>
+        </tr>
+        <tr>
+          <th>exception</th>
+          <td>{{ exception or ex }}</td>
+        </tr>
+        <tr>
+          <th>timestamp</th>
+          <td>{{ timestamp }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

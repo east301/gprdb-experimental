@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<options>
+  <option name="CLASS_COUNT_TO_USE_IMPORT_ON_DEMAND" value="128"/>
+  <option name="NAMES_COUNT_TO_USE_IMPORT_ON_DEMAND" value="128"/>
+  <option name="PACKAGES_TO_USE_IMPORT_ON_DEMAND">
+    <value/>
+  </option>
+</options>

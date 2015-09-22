@@ -1,0 +1,38 @@
+///
+/// Build script for server module.
+///
+
+apply from: "${rootProject.projectDir}/gradle/java.gradle"
+apply from: "${rootProject.projectDir}/gradle/application.gradle"
+
+mainClassName = 'jp.ac.tohoku.ecei.sb.gprdb.Cli'
+
+dependencies {
+    // project
+    compile     project(':gprdb-api')
+    compile     project(':gprdb-shared')
+
+    runtime     rootProject.subprojects.findAll { it.name.startsWith('gprdb-') && it.name != 'gprdb-cli' }
+
+    // framework
+    compile     libraries.spring_boot
+    compile     libraries.spring_boot_undertow
+    compile     libraries.spring_boot_web
+
+    // database
+    runtime     libraries.h2
+
+    // CLI
+    compile     libraries.argparse4j
+    compile     libraries.groovysh
+
+    // coding helper
+    compile     libraries.guava
+    compile     libraries.hibernate_validator
+    compile     libraries.lombok
+
+    // test
+    testCompile libraries.assertj
+    testCompile libraries.jmockit
+    testCompile libraries.testng
+}

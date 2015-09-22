@@ -1,0 +1,76 @@
+{% extends "layout" %}
+
+{% block main %}
+  <div class="large-12 columns">
+    <!-- title -->
+    <h1>Welcome to gprdb framework!</h1>
+    <p>gprdb is a simple and flexible framework for construction of gene-pair relationship databases.</p>
+    <!-- /title -->
+
+    <!-- /datasets -->
+    <h3>Available datasets</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Genes</th>
+        <th>Gene page example</th>
+      </tr>
+      </thead>
+      <tbody>
+        {% for d in global.datasets %}
+          <tr>
+            <td>{{ d.name }}</td>
+            <td>
+              <a href="/datasets/{{ d.id }}/genes"> {{ d.numGenes }} genes</a>
+            </td>
+            <td>
+              {% set g = d.genes.get(loop.index % d.numGenes) %}
+              {% set t = d.relationTypes[0] %}
+              <a href="/datasets/{{ d.id }}/{{ g.id }}/{{ t.id }}/table">{{ g.name|orElse(g.id) }} - {{ t.shortName }}</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <!-- /datasets -->
+
+    <!-- search -->
+    <h3>Search</h3>
+    <form>
+      <div class="row">
+        <div class="large-12 columns">
+          <input class="typeahead" type="text" placeholder="Type query (Gene ID, name, ...)"/>
+        </div>
+      </div>
+    </form>
+    <!-- /search -->
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script src="/webjars/typeahead.js/0.11.1/dist/bloodhound.min.js"></script>
+  <script src="/webjars/typeahead.js/0.11.1/dist/typeahead.jquery.min.js"></script>
+  <script>
+    (function ($) {
+      $(function () {
+        $(".typeahead").typeahead(null, {
+          name: "search",
+          //display: "value",
+          source: new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace("value"),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+              url: "/api/v1/datasets/search/autocomplete?query=%QUERY",
+              wildcard: "%QUERY"
+            }
+          })
+        }).on("typeahead:asyncrequest", function () {
+          // TODO
+        }).on("typeahead:asynccancel typeahead:asyncreceive", function () {
+          // TODO
+        });
+      });
+    })(jQuery);
+  </script>
+{% endblock %}

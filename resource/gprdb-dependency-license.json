@@ -1,0 +1,281 @@
+[ {
+  "name" : "Apache Commons BeanUtils",
+  "description" : "Apache Commons BeanUtils provides an easy-to-use but flexible wrapper around reflection and introspection.",
+  "version" : "1.9.2",
+  "projectUrl" : "http://commons.apache.org/proper/commons-beanutils/",
+  "license" : "The Apache Software License, Version 2.0",
+  "licenseUrl" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
+}, {
+  "name" : "Apache Commons Compress",
+  "description" : "Apache Commons Compress software defines an API for working with compression and archive formats. These include: bzip2, gzip, pack200, lzma, xz, Snappy, traditional Unix Compress, DEFLATE and ar, cpio, jar, tar, zip, dump, 7z, arj.",
+  "version" : "1.9.0",
+  "projectUrl" : "http://commons.apache.org/proper/commons-compress/",
+  "license" : "The Apache Software License, Version 2.0",
+  "licenseUrl" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
+}, {
+  "name" : "Apache Groovy",
+  "description" : "Groovy: A powerful, dynamic language for the JVM",
+  "version" : "2.4.4",
+  "projectUrl" : "http://groovy-lang.org",
+  "license" : "The Apache Software License, Version 2.0",
+  "licenseUrl" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
+}, {
+  "name" : "Commons Lang",
+  "description" : "Commons Lang, a package of Java utility classes for the classes that are in java.lang's hierarchy, or are considered to be so standard as to justify existence in java.lang.",
+  "version" : "14.12.2",
+  "projectUrl" : "http://commons.apache.org/lang/",
+  "license" : "The Apache Software License, Version 2.0",
+  "licenseUrl" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
+}, {
+  "name" : "Guava: Google Core Libraries for Java",
+  "description" : "Guava is a suite of core and expanded libraries that include utility classes, google's collections, io classes, and much much more. Guava has only one code dependency - javax.annotation, per the JSR-305 spec.",
+  "version" : "18.0.0",
+  "projectUrl" : "https://guava-libraries.googlecode.com/",
+  "license" : "The Apache Software License, Version 2.0",
+  "licenseUrl" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
+}, {
+  "name" : "H2 Database Engine",
+  "description" : null,
+  "version" : "1.4.187",
+  "projectUrl" : null,
+  "license" : null,
+  "licenseUrl" : "http://www.h2database.com/html/license.html"
+}, {
+  "name" : "Hibernate Search ORM",
+  "description" : "Hibernate Search integration with Hibernate Core",
+  "version" : "5.3.0.Final",
+  "projectUrl" : "http://www.hibernate.org",
+  "license" : "GNU Lesser General Public License",
+  "licenseUrl" : "http://www.gnu.org/licenses/lgpl-2.1.html"
+}, {
+  "name" : "Hibernate Validator Engine",
+  "description" : "Hibernate's Bean Validation (JSR-303) reference implementation.",
+  "version" : "5.2.0.CR1",
+  "projectUrl" : null,
+  "license" : "Apache License, Version 2.0",
+  "licenseUrl" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
+}, {
+  "name" : "JHDF5 (HDF5 for Java)",
+  "description" : "JHDF5 is a Java binding for HDF5 focusing on ease-of-use, which was developed by CISD and is now maintained by ETH SIS",
+  "version" : "14.12.1",
+  "projectUrl" : "https://wiki-bsse.ethz.ch/display/JHDF5",
+  "license" : "Apache License 2.0",
+  "licenseUrl" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+}, {
+  "name" : "Jackson-annotations",
+  "description" : "Core annotations used for value types, used by Jackson data binding package.",
+  "version" : "2.6.0",
+  "projectUrl" : "http://github.com/FasterXML/jackson",
+  "license" : "The Apache Software License, Version 2.0",
+  "licenseUrl" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
+}, {
+  "name" : "Jackson-datatype-jdk8",
+  "description" : "Add-on module for Jackson (http://jackson.codehaus.org) to support JDK 8 data types.",
+  "version" : "2.6.1",
+  "projectUrl" : "http://github.com/FasterXML/jackson-datatype-jdk8/",
+  "license" : "The Apache Software License, Version 2.0",
+  "licenseUrl" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
+}, {
+  "name" : "MySQL java connector",
+  "description" : "MySQL java connector",
+  "version" : "5.1.35",
+  "projectUrl" : "http://dev.mysql.com/usingmysql/java/",
+  "license" : "The GNU General Public License, Version 2",
+  "licenseUrl" : "http://www.gnu.org/licenses/gpl.txt"
+}, {
+  "name" : "OpenRDF Sesame: Model",
+  "description" : "RDF model interfaces and implementations.",
+  "version" : "4.0.0-M1",
+  "projectUrl" : null,
+  "license" : "Aduna BSD license",
+  "licenseUrl" : "https://bitbucket.org/openrdf/sesame/src/master/core/LICENSE.txt"
+}, {
+  "name" : "OpenRDF Sesame: NativeStore",
+  "description" : "Sail implementation that stores data directly to disk in dedicated file formats.",
+  "version" : "4.0.0-M1",
+  "projectUrl" : null,
+  "license" : "Aduna BSD license",
+  "licenseUrl" : "https://bitbucket.org/openrdf/sesame/src/master/core/LICENSE.txt"
+}, {
+  "name" : "OpenRDF Sesame: Rio - N3 (writer-only)",
+  "description" : "Rio writer implementation for the N3 file format.",
+  "version" : "4.0.0-M1",
+  "projectUrl" : null,
+  "license" : "Aduna BSD license",
+  "licenseUrl" : "https://bitbucket.org/openrdf/sesame/src/master/core/LICENSE.txt"
+}, {
+  "name" : "OpenRDF Sesame: Rio - RDF/XML",
+  "description" : "Rio parser and writer implementation for the RDF/XML file format.",
+  "version" : "4.0.0-M1",
+  "projectUrl" : null,
+  "license" : "Aduna BSD license",
+  "licenseUrl" : "https://bitbucket.org/openrdf/sesame/src/master/core/LICENSE.txt"
+}, {
+  "name" : "OpenRDF Sesame: SailRepository",
+  "description" : "Repository that uses a Sail stack.",
+  "version" : "4.0.0-M1",
+  "projectUrl" : null,
+  "license" : "Aduna BSD license",
+  "licenseUrl" : "https://bitbucket.org/openrdf/sesame/src/master/core/LICENSE.txt"
+}, {
+  "name" : "Pebble",
+  "description" : "Templating engine for Java.",
+  "version" : "1.6.0",
+  "projectUrl" : "http://www.mitchellbosecke.com/pebble",
+  "license" : "BSD 3-Clause License",
+  "licenseUrl" : "http://opensource.org/licenses/BSD-3-Clause"
+}, {
+  "name" : "Pebble Integration with Spring 3",
+  "description" : "Pebble Integration with Spring 3",
+  "version" : "1.6.0",
+  "projectUrl" : "http://www.mitchellbosecke.com/pebble",
+  "license" : "BSD 3-Clause License",
+  "licenseUrl" : "http://opensource.org/licenses/BSD-3-Clause"
+}, {
+  "name" : "PostgreSQL JDBC Driver",
+  "description" : "PostgreSQL JDBC Driver JDBC42",
+  "version" : "9.4.0.build-1203",
+  "projectUrl" : "http://jdbc.postgresql.org",
+  "license" : "The PostgreSQL License",
+  "licenseUrl" : "http://www.postgresql.org/about/licence/"
+}, {
+  "name" : "Project Lombok",
+  "description" : "Spice up your java: Automatic Resource Management, automatic generation of getters, setters, equals, hashCode and toString, and more!",
+  "version" : "1.16.4",
+  "projectUrl" : "http://projectlombok.org",
+  "license" : "The MIT License",
+  "licenseUrl" : "http://projectlombok.org/LICENSE"
+}, {
+  "name" : "Spring Boot Actuator Starter",
+  "description" : "Spring Boot Actuator Starter",
+  "version" : "1.2.5.RELEASE",
+  "projectUrl" : "http://projects.spring.io/spring-boot/",
+  "license" : "Apache License, Version 2.0",
+  "licenseUrl" : "http://www.apache.org/licenses/LICENSE-2.0"
+}, {
+  "name" : "Spring Boot Data JPA Starter",
+  "description" : "Spring Boot Data JPA Starter",
+  "version" : "1.2.5.RELEASE",
+  "projectUrl" : "http://projects.spring.io/spring-boot/",
+  "license" : "Apache License, Version 2.0",
+  "licenseUrl" : "http://www.apache.org/licenses/LICENSE-2.0"
+}, {
+  "name" : "Spring Boot Starter",
+  "description" : "Spring Boot Starter",
+  "version" : "1.2.5.RELEASE",
+  "projectUrl" : "http://projects.spring.io/spring-boot/",
+  "license" : "Apache License, Version 2.0",
+  "licenseUrl" : "http://www.apache.org/licenses/LICENSE-2.0"
+}, {
+  "name" : "Spring Boot Undertow Starter",
+  "description" : "Spring Boot Undertow Starter",
+  "version" : "1.2.5.RELEASE",
+  "projectUrl" : "http://projects.spring.io/spring-boot/",
+  "license" : "Apache License, Version 2.0",
+  "licenseUrl" : "http://www.apache.org/licenses/LICENSE-2.0"
+}, {
+  "name" : "Spring Boot Web Starter",
+  "description" : "Spring Boot Web Starter",
+  "version" : "1.2.5.RELEASE",
+  "projectUrl" : "http://projects.spring.io/spring-boot/",
+  "license" : "Apache License, Version 2.0",
+  "licenseUrl" : "http://www.apache.org/licenses/LICENSE-2.0"
+}, {
+  "name" : "Springy",
+  "description" : "WebJar for Springy",
+  "version" : "2.7.1",
+  "projectUrl" : "http://webjars.org",
+  "license" : "MIT",
+  "licenseUrl" : "https://spdx.org/licenses/MIT#licenseText"
+}, {
+  "name" : "StickyTableHeaders",
+  "description" : "WebJar for StickyTableHeaders",
+  "version" : "0.1.17",
+  "projectUrl" : "http://webjars.org",
+  "license" : "MIT",
+  "licenseUrl" : "https://spdx.org/licenses/MIT#licenseText"
+}, {
+  "name" : "XZ for Java",
+  "description" : "XZ data compression",
+  "version" : "1.5",
+  "projectUrl" : "http://tukaani.org/xz/java.html",
+  "license" : "Public Domain",
+  "licenseUrl" : null
+}, {
+  "name" : "argparse4j",
+  "description" : "The command-line parser library based on Python's argparse",
+  "version" : "0.6.0",
+  "projectUrl" : "http://argparse4j.sourceforge.net",
+  "license" : "MIT",
+  "licenseUrl" : "https://raw.github.com/tatsuhiro-t/argparse4j/master/LICENSE.txt"
+}, {
+  "name" : "font-awesome",
+  "description" : "WebJar for font-awesome",
+  "version" : "4.4.0",
+  "projectUrl" : "http://webjars.org",
+  "license" : "CC-BY-3.0",
+  "licenseUrl" : "https://spdx.org/licenses/CC-BY-3.0#licenseText"
+}, {
+  "name" : "foundation",
+  "description" : "WebJar for foundation",
+  "version" : "5.5.2",
+  "projectUrl" : "http://webjars.org",
+  "license" : "MIT",
+  "licenseUrl" : "https://spdx.org/licenses/MIT#licenseText"
+}, {
+  "name" : "jackson-databind",
+  "description" : "General data-binding functionality for Jackson: works on core streaming API",
+  "version" : "2.6.1",
+  "projectUrl" : "http://github.com/FasterXML/jackson",
+  "license" : "The Apache Software License, Version 2.0",
+  "licenseUrl" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
+}, {
+  "name" : "jquery",
+  "description" : "WebJar for jquery",
+  "version" : "2.1.4",
+  "projectUrl" : "http://webjars.org",
+  "license" : "MIT",
+  "licenseUrl" : "https://spdx.org/licenses/MIT#licenseText"
+}, {
+  "name" : "js-cookie",
+  "description" : "WebJar for js-cookie",
+  "version" : "2.0.3",
+  "projectUrl" : "http://webjars.org",
+  "license" : "MIT",
+  "licenseUrl" : "https://spdx.org/licenses/MIT#licenseText"
+}, {
+  "name" : "lodash",
+  "description" : "WebJar for lodash",
+  "version" : "3.10.1",
+  "projectUrl" : "http://webjars.org",
+  "license" : "MIT",
+  "licenseUrl" : "https://spdx.org/licenses/MIT#licenseText"
+}, {
+  "name" : "mapdb",
+  "description" : "MapDB provides concurrent Maps, Sets and Queues backed by disk storage or off-heap memory. It is a fast, scalable and easy to use embedded Java database.",
+  "version" : "2.0.0.alpha2",
+  "projectUrl" : "http://www.mapdb.org",
+  "license" : "The Apache Software License, Version 2.0",
+  "licenseUrl" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
+}, {
+  "name" : "mariadb-java-client",
+  "description" : "JDBC driver for MariaDB and MySQL",
+  "version" : "1.2.2.0",
+  "projectUrl" : "https://mariadb.com/kb/en/mariadb/about-mariadb-connector-j/",
+  "license" : "LGPL-2.1",
+  "licenseUrl" : null
+}, {
+  "name" : "typeahead.js",
+  "description" : "WebJar for typeahead.js",
+  "version" : "0.11.1",
+  "projectUrl" : "http://webjars.org",
+  "license" : "MIT",
+  "licenseUrl" : "https://spdx.org/licenses/MIT#licenseText"
+}, {
+  "name" : "vue",
+  "description" : "WebJar for vue",
+  "version" : "0.12.7",
+  "projectUrl" : "http://webjars.org",
+  "license" : "MIT",
+  "licenseUrl" : "https://spdx.org/licenses/MIT#licenseText"
+} ]

@@ -1,0 +1,36 @@
+///
+/// Build script for shared module.
+///
+
+apply from: "${rootProject.projectDir}/gradle/java.gradle"
+
+dependencies {
+    // framework
+    compile     libraries.spring_boot
+
+    // IO
+    compile     libraries.commons_compress
+
+    // CLI
+    compile     libraries.argparse4j
+
+    // coding helper
+    compile     libraries.guava
+    compile     libraries.hibernate_validator
+    compile     libraries.lombok
+
+    // test
+    testCompile libraries.assertj
+    testCompile libraries.jmockit
+    testCompile libraries.testng
+}
+
+sonarRunner {
+    sonarProperties {
+        property 'sonar.exclusions', [
+            '**/com/**/*.java',
+            '**/jp/ac/tohoku/ecei/sb/gprdb/system/app/FallbackApplicationSource.java',
+            '**/jp/ac/tohoku/ecei/sb/gprdb/system/io/SingleFileConfig.java',
+        ].join(',')
+    }
+}

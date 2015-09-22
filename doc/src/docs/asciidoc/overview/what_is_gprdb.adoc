@@ -1,0 +1,39 @@
+What is gprdb?
+--------------
+
+`gprdb` is a framework to construct databases of relations of pairs of genes.
+A lot of biological data, such as gene coexpression, protein-protein interaction etc.,
+are represented as set of pairs of two genes.
+`gprdb` aims to provide the way to easily summarize and analyze such kind of data.
+
+The figure below shows a simplified version of gprdb's architecture.
+
+[ditaa]
+....
+  +-------------------------+      +-------------------------+
+  | gene-pair relation data |      |  gene annotation data   |
+  +-------------------------+      +-------------------------+
+     coexpression, PPI, ...         gene ontology, pathway,...
+              |                                 |
+              +--------------+   +--------------+
+                             |   |
+                             v   v
+                     +--------------------+
+                     |   gprdb framework  |
+                     +--------------------+
+                             |   |
+              +--------------+   +--------------+
+              |                                 |
+              v                                 v
+    /--------------------\          /----------------------\
+    |       viewer       |          |       analysis       |
+    \--------------------/          \----------------------/
+....
+
+gprdb accepts two kinds of inputs: gene-pair relation data (gene coexpression, protein-protein interactin, etc.)
+and 2) gene annotation data (gene ontology, pathway, etc.).
+
+When two types of data is given, gprdb loads them into internal datastore, and merges them.
+Then, several human-friendly views, such as gene-pair relation table, are automatically generated.
+In addition viewer feature, users can be analyze gene-pair relation data interactively.
+Analysis recipes can be extended using "plugins".

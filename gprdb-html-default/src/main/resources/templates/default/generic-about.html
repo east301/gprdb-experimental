@@ -1,0 +1,81 @@
+{% extends "layout" %}
+
+{% block main %}
+  <div class="large-12 columns">
+    <!-- gprdb -->
+    <h1>About gprdb</h1>
+    <p>
+      gprdb is a simple and flexible framework for construction of gene-pair relation databases.
+      Source code and binary form of gprdb are distributed under
+      <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License Version 2</a>.
+    </p>
+
+    <h3>Build information</h3>
+    <table style="width: 100%;">
+      <tbody>
+        <tr>
+          <th>Version</th>
+          <td>{{ build.version }}</td>
+        </tr>
+        <tr>
+          <th>Commit</th>
+          <td>{{ build.commit }}</td>
+        </tr>
+        <tr>
+          <th>Built at</th>
+          <td>{{ build.date }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- /gprdb -->
+
+    <hr/>
+
+    <!-- oss license -->
+    <h3>Open source license</h3>
+    <p>gprdb is built on top of several OSS software. (Do not remove this license notifications.)</p>
+
+    {% if dependencies is empty %}
+      <div data-alert class="alert-box alert round">
+        Failed to load dependency library information.<br/>
+        Make sure that gprdb was correctly built and gprdb-dependency-license.json is present and contains valid JSON.
+      </div>
+    {% endif %}
+
+    {% if dependencies is not empty %}
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Version</th>
+            <th>License</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for d in dependencies %}
+            <tr>
+              <td>
+                {% if d.projectUrl|present %}
+                  <a href="{{ d.projectUrl|innerValue }}" target="_blank">{{ d.name }}</a>
+                {% else %}
+                  {{ d.name }}
+                {% endif %}
+              </td>
+              <td>
+                {% if d.version|present %}
+                  {{ d.version|innerValue }}
+                {% endif %}
+              </td>
+              <td>
+                {% if d.licenseUrl|present %}
+                  <a href="{{ d.licenseUrl|innerValue }}" target="_blank">{{ d.license|orElse("(see detail page)") }}</a>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+    <!-- /oss license -->
+  </div>
+{% endblock %}

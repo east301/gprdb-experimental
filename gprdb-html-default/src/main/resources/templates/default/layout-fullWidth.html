@@ -1,0 +1,67 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="grdbfw: a simple and flexible framework for construction of gene-pair relation databases"/>
+    <meta name="author" content="Shu Tadaka, Kinoshita, Obayashi laboratory"/>
+    <meta name="copyright" content="(c) 2015 Kinoshita, Obayashi laboratory, Tohoku University"/>
+    <title>grdbfw</title>
+    <link rel="stylesheet" href="/webjars/foundation/5.5.2/css/normalize.min.css"/>
+    <link rel="stylesheet" href="/webjars/foundation/5.5.2/css/foundation.min.css"/>
+    <link rel="stylesheet" href="/webjars/font-awesome/4.4.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/static/default/css/default-style.css"/>
+    {% block css %}{% endblock %}
+    <script src="/webjars/foundation/5.5.2/js/vendor/modernizr.js"></script>
+  </head>
+  <body>
+    <!-- header -->
+    <nav class="top-bar" data-topbar>
+      <ul class="title-area">
+        <li class="name">
+          <h1><a href="/">grdbfw</a></h1>
+        </li>
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+      </ul>
+      <section class="top-bar-section">
+        <ul class="left">
+          <li class="divider"></li>
+          <li><a href="#">datasets</a></li>
+        </ul>
+        <ul class="right">
+          <li><a href="/about">about</a></li>
+        </ul>
+      </section>
+    </nav>
+    <!-- /header -->
+
+    <div class="vertical-spacer"></div>
+
+    <!-- main -->
+    <div class="row full-width">
+      {% block main %}
+        <div class="large-12 columns">
+          <h1>Hello World</h1>
+        </div>
+      {% endblock %}
+    </div>
+    <!-- /main -->
+
+    <!-- footer -->
+    <footer class="row full-width">
+      <div class="large-12 columns">
+        <hr/>
+        <p>put your copyright notice here</p>
+      </div>
+    </footer>
+    <!-- /footer -->
+
+    <!-- js -->
+    <script src="/webjars/jquery/2.1.4/dist/jquery.min.js"></script>
+    <script src="/webjars/foundation/5.5.2/js/vendor/fastclick.js"></script>
+    <script src="/webjars/foundation/5.5.2/js/foundation.min.js"></script>
+    <script>(function ($) { $(document).foundation(); })(jQuery);</script>
+    {% block js %}{% endblock %}
+    <!-- /js -->
+  </body>
+</html>

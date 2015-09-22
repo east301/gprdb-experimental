@@ -1,0 +1,8 @@
+Deploy Docker container
+-----------------------
+
+The most recommended way to deploy gprdb is using https://www.docker.com/[Docker].
+`gprdb` contains `Dockerfile` to build `gprdb` from source code and run embedded HTTP server.
+To deploy `gprdb` Docker container, please follow the following instructions.
+
+(to be written)

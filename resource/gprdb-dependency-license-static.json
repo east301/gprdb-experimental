@@ -1,0 +1,8 @@
+[ {
+  "name": "JHDF5 (HDF5 for Java)",
+  "description": "JHDF5 is a Java binding for HDF5 focusing on ease-of-use, which was developed by CISD and is now maintained by ETH SIS",
+  "version": "14.12.1",
+  "projectUrl": "https://wiki-bsse.ethz.ch/display/JHDF5",
+  "license": "Apache License 2.0",
+  "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0.html"
+} ]

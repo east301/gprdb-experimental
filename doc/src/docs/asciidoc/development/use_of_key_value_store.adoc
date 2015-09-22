@@ -1,0 +1,24 @@
+Use of key value store
+----------------------
+
+gprdb shiped with key-value store abstraction layer. If you need key-value store,
+use `KeyValueStoreManager` and `KeyValueStore` in `jp.ac.tohoku.ecei.sb.gprdb.io` package.
+
+[WARNING]
+====
+Current implementation uses http://www.mapdb.org/[MapDB] as underlying backend,
+however, underlying implementation might be changed in feature release.
+====
+
+Usage of key value store is very simple.
+
+[source,java,numbered]
+.UsageExample.java
+----
+include::use_of_key_value_store/UsageExample.java[]
+----
+
+[NOTE]
+====
+Map data is stored in $STORAGE_ROOT/[map name].mapdb.* files.
+====

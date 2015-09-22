@@ -1,0 +1,14 @@
+///
+/// Build script for javadoc module.
+///
+
+apply from: "${rootProject.projectDir}/gradle/java.gradle"
+
+javadoc {
+    source rootProject.subprojects
+        .findAll { it.name.startsWith('gprdb-') }
+        .collect { it.projectDir.absolutePath + '/src/main/java'}
+
+    title = "gprdb API $version"
+    options.locale = 'en_US'
+}

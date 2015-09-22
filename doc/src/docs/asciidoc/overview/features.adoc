@@ -1,0 +1,30 @@
+Features
+--------
+
+`gprdb` equips the following features.
+
+fast & scalable
+~~~~~~~~~~~~~~~
+
+gprdb framework can handle from dozens of genes to tens of thounsands of genes effeciently.
+
+
+Modularized
+~~~~~~~~~~~
+
+gprdb is highly modularized. Customization can be easily done by writing custom "plugins".
+
+
+REST API
+~~~~~~~~
+
+Almost of all data stored in gprdb's internal datastore can be retrieved via REST API.
+
+
+Semantic web ready
+~~~~~~~~~~~~~~~~~~
+
+gprdb speaks SPARQL! Gene-pair relation data is automatically modeled as sets of triples
+using pre-defined RDF vocabularies and stored in embedded triple store.
+People in semantic web community can retrieve your data using SPARQL query language.
+Data integration is easily done by this feature.

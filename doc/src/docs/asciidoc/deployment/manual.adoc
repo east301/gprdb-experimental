@@ -1,0 +1,4 @@
+Manual deployment
+-----------------
+
+(to be written)

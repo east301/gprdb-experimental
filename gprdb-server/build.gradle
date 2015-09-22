@@ -1,0 +1,85 @@
+///
+/// Build script for server module.
+///
+
+apply from: "${rootProject.projectDir}/gradle/java.gradle"
+apply from: "${rootProject.projectDir}/gradle/application.gradle"
+
+mainClassName = 'jp.ac.tohoku.ecei.sb.gprdb.Server'
+
+configurations {
+    loaded
+}
+
+dependencies {
+    // project
+    compile     project(':gprdb-api')
+    compile     project(':gprdb-shared')
+
+    runtime     rootProject.subprojects.findAll { it.name.startsWith('gprdb-') && it.name != 'gprdb-cli' }
+
+    // framework
+    compile     libraries.spring_boot
+    compile     libraries.spring_boot_actuator
+    compile     libraries.spring_boot_undertow
+    compile     libraries.spring_boot_web
+
+    // database
+    runtime     libraries.h2
+
+    // web
+    compile     libraries.pebble
+
+    // RDF
+    compile     libraries.sesame
+
+    // coding helper
+    compile     libraries.guava
+    compile     libraries.hibernate_validator
+    compile     libraries.lombok
+
+    // test
+    testCompile libraries.assertj
+    testCompile libraries.jmockit
+    testCompile libraries.testng
+
+    // runWithReloader
+    loaded      libraries.spring_loaded
+}
+
+task runWithReloader(dependsOn: classes) << {
+    //
+    if (!project.hasProperty('backport')) {
+        throw new RuntimeException('runWithReloader requires -Pbackport flag')
+    }
+
+    //
+    def classpath = sourceSets.main.runtimeClasspath.findAll { !it.path.contains('gprdb-') }.join(':')
+
+    def modules = (configurations.runtime.asPath.findAll('gprdb\\-[a-z\\-]+') as Set) + ['gprdb-server']
+    modules.findAll { !it.endsWith('-') }.each {
+        def template = "${rootProject.projectDir}/${it}/build/%s/main:"
+        classpath = String.format(template, "classes") + classpath
+        classpath = String.format(template, "resources") + classpath
+    }
+
+    //
+    exec {
+        workingDir rootProject.projectDir
+        environment 'SPRING_CONFIG_LOCATION', "${rootProject.projectDir}/application.yml"
+
+        executable 'java'
+        args '-javaagent:' + configurations.loaded.asPath, '-noverify', '-cp', classpath, mainClassName
+
+    }
+}
+
+sonarRunner {
+    sonarProperties {
+        property 'sonar.exclusions', [
+            '**/jp/ac/tohoku/ecei/sb/gprdb/dataset/pair/GenePairRelationTableQueryColumnImpl.java',
+            '**/jp/ac/tohoku/ecei/sb/gprdb/system/server/cache/ContentCache.java',
+            '**/jp/ac/tohoku/ecei/sb/gprdb/system/server/controller/PageNotFoundException.java',
+        ].join(',')
+    }
+}

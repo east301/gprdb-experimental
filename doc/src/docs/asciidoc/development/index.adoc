@@ -1,0 +1,18 @@
+Development
+===========
+
+This section is for developers. Detailed internal structure of gprdb is explained.
+
+[NOTE]
+====
+In code examples in this section,
+https://projectlombok.org/[Lombok] and https://github.com/google/guava[Guava] is used to shorten Java code.
+====
+
+include::spring_basics.adoc[]
+
+include::datastore_overview.adoc[]
+
+include::use_of_relational_database.adoc[]
+
+include::use_of_key_value_store.adoc[]

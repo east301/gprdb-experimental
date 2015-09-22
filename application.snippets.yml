@@ -1,0 +1,120 @@
+###
+### application.yml snippets
+###
+
+---
+# ================================================================================
+# [datastore] use H2 as RDB backend
+# ================================================================================
+
+spring:
+  profiles: h2
+
+  datastource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:file:/Users/tadaka/research/gitlab/tadaka/gpr/data/app/rdb;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE
+    username: sa
+
+
+---
+# ================================================================================
+# [datastore] use MariaDB as RDB backend
+# ================================================================================
+
+spring:
+  profiles: mariadb
+
+  datastource:
+    driverClassName: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3606/gprdb
+    username: username
+    password: password
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect  # or MySQLInnoDBDialect, MySQLMyISAMDialect
+
+
+---
+# ================================================================================
+# [datastore] use MySQL as RDB backend
+# ================================================================================
+
+spring:
+  profiles: mysql
+
+  datastource:
+    driverClassName: org.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3606/gprdb
+    username: username
+    password: password
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect  # or MySQLInnoDBDialect, MySQLMyISAMDialect
+
+
+---
+# ================================================================================
+# [datastore] use PostgreSQL as RDB backend
+# ================================================================================
+
+spring:
+  profiles: mysql
+
+  datastource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/gprdb
+    username: username
+    password: password
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+
+---
+# ================================================================================
+# [datastore] change directory of Lucene (Hibernate search) full text search index
+# ================================================================================
+
+spring:
+  profiles: licene_search_index_directory
+
+  jpa:
+    properties:
+      hibernate:
+        search:
+          default:
+            directory_provider: filesystem
+            indexBase: /Users/tadaka/research/gitlab/tadaka/gpr/data/app/hibernate-search
+
+
+---
+# ================================================================================
+# [http] change listen address and port of embedded HTTP server
+# ================================================================================
+
+spring:
+  profiles: server_listen_address_and_port
+
+server:
+  address: 127.0.0.1    # default: 0.0.0.0
+  port: 9000            # default: 8080
+
+
+---
+# ================================================================================
+# [logging] change logging level
+# ================================================================================
+
+spring:
+  profiles: logging_level
+
+logging:
+  level:
+    org.springframework: ERROR
+    jp.ac.tohoku.ecei.sb.gprdb: DEBUG

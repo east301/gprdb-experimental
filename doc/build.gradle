@@ -1,0 +1,63 @@
+///
+/// Build script for doc module.
+///
+
+// ================================================================================
+// build script
+// ================================================================================
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jruby-gradle:jruby-gradle-plugin:1.1.2'
+        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.2'
+    }
+}
+
+// ================================================================================
+// asciidoctor
+// ================================================================================
+
+apply plugin: 'com.github.jruby-gradle.base'
+apply plugin: 'org.asciidoctor.convert'
+
+dependencies {
+    gems    'rubygems:asciidoctor-diagram:1.3.0'
+}
+
+def getCommit() {
+    try {
+        return org.ajoberstar.grgit.Grgit.open(rootProject.file('.')).head().id.substring(0, 8)
+    } catch (Exception ex) {
+        return 'UNKNOWN'
+    }
+}
+
+ext.commit = getCommit()
+
+asciidoctor {
+    dependsOn jrubyPrepare
+    backends = ['docbook']
+    requires = ['asciidoctor-diagram']
+    gemPath = [file("$buildDir/gems"), file("${rootProject.projectDir}/vendor/asciidoctor-fopub")]
+    options (
+        'doctype': 'book',
+        'section-numbers': true,
+    )
+    attributes (
+        'toc2'              : '',
+        'source-highlighter': 'coderay',
+        'project-git-commit': project.ext.commit,
+    )
+}
+
+task asciidoctorPdf(type: Exec, dependsOn: asciidoctor) {
+    def source = "$buildDir/asciidoc/docbook/index.xml"
+    def destination = "$buildDir/asciidoc/docbook/index.pdf"
+
+    inputs.file source
+    outputs.file destination
+    commandLine "${rootProject.projectDir}/vendor/asciidoctor-fopub/bin/fopub", source
+}

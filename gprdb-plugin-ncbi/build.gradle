@@ -1,0 +1,35 @@
+///
+/// Build script for plugin-ncbi module.
+///
+
+apply from: "${rootProject.projectDir}/gradle/java.gradle"
+
+dependencies {
+    // project
+    compile     project(':gprdb-api')
+    compile     project(':gprdb-shared')
+
+    // framework
+    compile     libraries.spring_boot
+
+    // coding helper
+    compile     libraries.guava
+    compile     libraries.hibernate_validator
+    compile     libraries.lombok
+
+    // test
+    testCompile libraries.assertj
+    testCompile libraries.jmockit
+    testCompile libraries.testng
+}
+
+sonarRunner {
+    sonarProperties {
+        property 'sonar.exclusions', [
+            '**/jp/ac/tohoku/ecei/sb/gprdb/plugin/ncbi/dataset/id/NcbiIdentifierLoaderConfig.java',
+            '**/jp/ac/tohoku/ecei/sb/gprdb/plugin/ncbi/dataset/id/NcbiIdentifierLinkImpl.java',
+            '**/jp/ac/tohoku/ecei/sb/gprdb/plugin/ncbi/dataset/id/RawIdentifierInfoImpl.java',
+            '**/jp/ac/tohoku/ecei/sb/gprdb/plugin/ncbi/dataset/id/RawIdentifierMappingImpl.java',
+        ].join(',')
+    }
+}

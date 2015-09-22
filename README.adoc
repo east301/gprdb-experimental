@@ -1,0 +1,5 @@
+gprdb
+=====
+
+gprdb is a simple and flexible framework for construction of gene-pair relation databases.
+Please refer to gprdb's documentation for detailed usage.

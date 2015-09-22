@@ -1,0 +1,43 @@
+Use of relational database
+--------------------------
+
+Relational database can be used http://projects.spring.io/spring-data-jpa/[Spring Data JPA].
+You have to take the following steps:
+
+. create entity class
+. create repository interface for the entity class
+. create `jp.ac.tohoku.ecei.sb.gprdb.app.ApplicationSourceProvider` implementation
+  to provide application source with `@org.springframework.boot.orm.jpa.EntityScan` annotation.
+. inject repository implementation
+
+[source,java,numbered]
+.MyEntity.java
+----
+include::use_of_relational_database/MyEntity.java[]
+----
+
+[source,java,numbered]
+.MyEntityRepository.java
+----
+include::use_of_relational_database/MyEntityRepository.java[]
+----
+
+[source,java,numbered]
+.MyApplicationSourceProviderImpl.java
+----
+include::use_of_relational_database/MyApplicationSourceProviderImpl.java[]
+----
+
+[source,java,numbered]
+.MyApplicationSource.java
+----
+include::use_of_relational_database/MyApplicationSource.java[]
+----
+
+[NOTE]
+====
+`MyApplicationSource` and `MyApplicationSourceProviderImpl` are required. Default configuration of gprdb
+only specifies `jp.ac.tohoku.ecei.sb.gprdb` as component scan target package, therefore, if your Entity class etc.
+is located in your custom package instead of `jp.ac.tohoku.ecei.sb.grpdb`, your entities etc. won't be discovered.
+For more details, please refer to [TODO].
+====

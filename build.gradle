@@ -1,0 +1,23 @@
+///
+/// Build script for java-gradle-template project.
+///
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.2.2'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.2.5.RELEASE'
+    }
+}
+
+allprojects {
+    apply from: "${rootProject.projectDir}/gradle/ide.gradle"
+}
+
+subprojects {
+    // Project ID
+    group = 'jp.ac.tohoku.ecei.sb.gprdb'
+    version = '0.0.0-SNAPSHOT'
+}

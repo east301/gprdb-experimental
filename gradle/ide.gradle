@@ -1,0 +1,43 @@
+///
+/// Build script to configure IDE support 
+///
+
+// ================================================================================
+// Eclipse
+// ================================================================================
+
+apply plugin: 'eclipse'
+
+
+// ================================================================================
+// IntelliJ IDEA
+// ================================================================================
+
+apply plugin: 'idea'
+
+def addCodeStyle(provider) {
+    // ref. http://stackoverflow.com/questions/26108228/pass-custom-code-style-xml-to-gradle-idea-plugin
+
+    def project = provider.asNode()
+    def codeStyleNode = project.appendNode('component', [name: 'ProjectCodeStyleSettingsManager'])
+    codeStyleNode.appendNode('option', [name: 'USE_PER_PROJECT_SETTINGS', value: 'true'])
+    def projectSettingsNode = codeStyleNode.appendNode('option', [name: 'PER_PROJECT_SETTINGS']).appendNode('value')    
+
+    def codeStyleXmlText = new File("${rootProject.projectDir}/gradle/idea-codestyle.xml").text
+    def codeStyleXml = new XmlParser().parseText(codeStyleXmlText)
+    codeStyleXml.children().each {
+        projectSettingsNode.append it
+    }
+}
+
+idea {
+    if (project != null) {
+        project {
+            languageLevel = '1.8'
+
+            ipr {
+                withXml { addCodeStyle it }
+            }
+        }
+    }
+}

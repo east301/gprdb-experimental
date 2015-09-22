@@ -1,0 +1,35 @@
+///
+/// Build script for gprdb module.
+///
+
+apply from: "${rootProject.projectDir}/gradle/java.gradle"
+apply from: "${rootProject.projectDir}/gradle/application.gradle"
+
+mainClassName = 'jp.ac.tohoku.ecei.sb.gprdb.Launcher'
+
+dependencies {
+    // all projects
+    compile     rootProject.subprojects.findAll { it.name.startsWith('gprdb-') }
+
+    // database (for packaging)
+    compile     libraries.h2
+    compile     libraries.mariadb
+    compile     libraries.mysql
+    compile     libraries.postgresql
+
+    // test
+    testCompile libraries.assertj
+    testCompile libraries.jmockit
+    testCompile libraries.testng
+}
+
+applicationDistribution.from(project(':doc').buildDir.absolutePath + '/asciidoc/docbook') {
+    into 'doc'
+    include 'index.pdf'
+}
+
+applicationDistribution.from(project(':javadoc').buildDir.absolutePath + '/docs/javadoc') {
+    into 'javadoc'
+}
+
+[distTar, distZip]*.dependsOn([':doc:asciidoctorPdf', ':javadoc:javadoc'])

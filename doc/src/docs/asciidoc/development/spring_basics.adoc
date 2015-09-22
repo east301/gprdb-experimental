@@ -1,0 +1,148 @@
+Spring basics
+-------------
+
+gprdb entirely uses http://spring.io/[Spring framework].
+You've seen a lot of classes annotated with `@Component` in gprdb's source code.
+To develop plugins and core functionalities of gprdb, you should know what Spring is, and how Spring works.
+
+
+What is Spring framework?
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Spring is an implementation of DI container.
+"DI" stands for https://en.wikipedia.org/wiki/Dependency_injection[dependency injection].
+The DI is a technique to remove dependeny relationships between components or modules,
+and achieve loose coupling of them.
+
+To explain what DI is, here, we imagie that we are developing a book library management system.
+The book management system accepts https://en.wikipedia.org/wiki/International_Standard_Book_Number[ISBN] as input,
+and when an ISBN is given, retrieves information of the book using a web service, for example, Amazon or Google Books,
+and stores the information to database.
+
+The interface of module to retrieve book information should be like:
+
+[source,java,numbered]
+----
+include::spring_basics/BookInfoRetriever.java[]
+----
+
+Then let's write an implementation of `BookInfoRetriever` which uses Amazon as backend.
+
+[source,java,numbered]
+----
+include::spring_basics/AmazonBookInfoRetriever.java[]
+----
+
+Google Books version of `BookInfoRetriever` may look like:
+
+[source,java,numbered]
+----
+include::spring_basics/GoogleBookInfoRetriever.java[]
+----
+
+Next, let's use these implementations in book management system.
+
+[source,java,numbered]
+----
+include::spring_basics/BookManager.java[]
+----
+
+The `BookManager` above has several problems. One of them is that implementation of `BookInfoRetriever` is fixed
+and cannot be changed easily. We might prefer Google Books version depending on situation.
+Of cause, we can change the code to manually select implementation depending on configuration,
+however, if we use that strategy, `BookManager` must know all of `BookInfoRetriever` implementations.
+This cause a problem when we want `BookInfoRetriever` to be pluggable.
+
+To summarize, strong coupling of `BookManager` and actual implementation of `BookInfoRetriever`
+(not `BookInfoRetriever` interface) might cause a problem.
+This problem can be solved using DI technique. Here is Spring version of `BookManager`.
+
+[source,java,numbered]
+----
+include::spring_basics/BookManagerWithDI.java[]
+----
+
+You can see `@Component` annotation and `@Autowired` annotation.
+Detail of these annotations are explained in the next section.
+
+In the Spring version of `BookManager`, neither of `AmazonBookInfoRetriever` nor `GoogleBookInfoRetriever` appers,
+just `BookInfoRetriever` appers. Spring automatically discover and selects implementation of `BookInfoRetriever`
+according to configuration file, and sets an instance of selected implementation to `retriever` field.
+
+Like the example Spring and other DI containers connect an interface and corresponding implementations,
+however, loose coupling of them.
+
+
+How to use Spring framework
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As you can see in the examples above and actual gprdb's source codes,
+implementation classes usually have `@Component` annotation.
+This tells Spring that the class is an implementation of some interfaces.
+Classes annotated with `@Component` will be automatically discovered
+during initialization of Spring DI Container and loaded into the container.
+
+[NOTE]
+====
+In the book management system example, we have two implementations for `BookInfoRetriever`.
+In this case we can select which implementation is loaded into the container by configuration.
+The configuration is done by using `@ConditionalOn*` annotations
+(http://docs.spring.io/autorepo/docs/spring-boot/current/api/org/springframework/boot/autoconfigure/condition/ConditionalOnProperty.html[@ConditionalOnProperty] etc.).
+(Please refer to http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-developing-auto-configuration.html[Spring's documentation]).
+====
+
+Once a selected implementation is loaded into Spring DI container, we can use it.
+The magic to use the selected implementation is `@Autowired` annotation.
+
+You may think that `retriever` field in `BookManagerWithDI` is always `null`,
+threfore, invocation of `registerBook` always throws a NPE.
+This is not true. If fields in a `@Component` class are annoted with `@Autowired`,
+Spring DI container automatically sets intances corresponds to the fields.
+Therefore, NPE won't occur.
+
+In this way, Spring and other DI containers provide a way to separate interface and implementation of a service.
+
+
+Advantages of using Spring and other DI containers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The biggest advantage is separation of interface and implementation as explained above.
+This also contributes decrease of time to be required to compile modules by decreasing dependency relationships.
+
+
+How to use Spring framework in gprdb
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In gprdb, most of all components are loaded through Spring.
+The exception is that `ApplicationSource` classes are loaded through
+http://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html[ServiceLoader].
+
+When you want to get an instance corresponds to an interface declared in `gprdb-api` module,
+just add `@Autowired` field in your custom component class.
+
+
+ApplicationSource in gprdb
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Entry points (main methods) in gprdb usually use
+`jp.ac.tohoku.ecei.sb.gprdb.app.SpringApplicationUtils#newApplication` in `gprdb-shared` module
+to construct Spring DI container
+(http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/ApplicationContext.html[ApplicationContext]).
+
+In the `newApplication`, `jp.ac.tohoku.ecei.sb.gprdb.app.ApplicationSourceProvider` (`gprdb-api`) implementations
+are loaded using `ServiceLoader`, and return valeus of `ApplicationSourceProvider#getSources` are used bootstrap
+Spring DI container.
+
+`ApplicationSource` tell bootstrapper of Spring DI container how a container is constructed.
+
+For example, Spring automatically discovers `@Component`-annotated classes,
+however, not all packages in classpath are scanned.
+We have to manually specify start point of component scan.
+The start point is one of the configurations done by `ApplicationSource` class.
+
+`jp.ac.tohoku.ecei.sb.gprdb.app.DefaultApplicationSource` in `gprdb-impl` module
+is a default implementation of `ApplicationSource` class.
+`DefaultApplicationSource` annotated with `@ComponentScan(basePackage = "jp.ac.tohoku.ecei.sb.gprdb")`,
+and it make Spring start package scan from `jp.ac.tohoku.ecei.sb.gprdb` package.
+
+For more details, please refer to Spring's documentation.

@@ -1,0 +1,48 @@
+///
+/// Build script for plugin-identifiers-dot-org module.
+///
+
+apply from: "${rootProject.projectDir}/gradle/java.gradle"
+
+dependencies {
+    // project
+    compile     project(':gprdb-api')
+
+    // framework
+    compile     libraries.spring_boot
+
+    // coding helper
+    compile     libraries.guava
+    compile     libraries.hibernate_validator
+    compile     libraries.lombok
+
+    // test
+    testCompile libraries.assertj
+    testCompile libraries.jmockit
+    testCompile libraries.testng
+}
+
+task updateSupportedIdentifierPrefixList() << {
+    def dest = new File("${project.projectDir}/src/main/resources/miriam-namespaces.txt")
+    outputs.file dest
+
+    doLast {
+        //
+        def documentBuilder = javax.xml.parsers.DocumentBuilderFactory.newInstance().newDocumentBuilder()
+        def document = documentBuilder.parse('http://www.ebi.ac.uk/miriam/main/export/xml/')
+        def xpathFactory = javax.xml.xpath.XPathFactory.newInstance()
+        def xpath = xpathFactory.newXPath();
+
+        def namespaces = xpath
+            .evaluate("//*[local-name()='namespace']/text()", document, javax.xml.xpath.XPathConstants.NODESET)
+            .collect { it.getNodeValue() }
+
+        namespaces.sort()
+
+        //
+        if (!dest.parentFile.exists()) {
+            dest.parentFile.mkdirs()
+        }
+        dest.text = namespaces.join('\n')
+    }
+}

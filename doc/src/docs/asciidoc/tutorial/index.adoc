@@ -1,0 +1,6 @@
+Tutorial
+========
+
+This sections shows how to use gprdb framework through construction of tiny gene-pair relation databases.
+
+include::mini_coxpresdb.adoc[]

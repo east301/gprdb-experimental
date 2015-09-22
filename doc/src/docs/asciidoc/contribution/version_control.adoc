@@ -1,0 +1,38 @@
+Version control
+---------------
+
+Workflow
+~~~~~~~~
+
+gprdb project uses https://git-scm.com/[Git] as version control system.
+Several workflows are proposed, and gprdb uses slightly modified version of
+https://guides.github.com/introduction/flow/[GitHub flow].
+
+Original GitHub flow performs deploys directly from master branch and don't have "release" branch.
+This style might be suitable where products are released or deployed frequently,
+however, gprdb won't release or deploy products frequently.
+Therefore, we prepare release branch to maintain release version of gprdb products.
+
+
+Branch naming convention
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+[cols="2*",options="header,autowidth"]
+|====
+| purpouse of a branch
+| branch name pattern
+
+| feature (topic) branch
+| feature/[feature-name]
+
+| hotfix branch
+| hotfix/[hotfix-name]
+
+| release branch
+| release/[version]
+|====
+
+[NOTE]
+====
+Words in branch name should be concatenated by `-` not `_`.
+====

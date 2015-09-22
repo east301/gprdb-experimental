@@ -1,0 +1,52 @@
+///
+/// Build script for impl module.
+///
+
+apply from: "${rootProject.projectDir}/gradle/java.gradle"
+
+dependencies {
+    // project
+    compile     project(':gprdb-api')
+    compile     project(':gprdb-shared')
+
+    // framework
+    compile     libraries.spring_boot
+    compile     libraries.spring_boot_jpa
+
+    // database
+    compile     libraries.hibernate_search
+    compile     libraries.jhdf5
+    compile     libraries.mapdb
+
+    // RDF
+    compile     libraries.sesame
+
+    // coding helper
+    compile     libraries.commons_beanutils
+    compile     libraries.guava
+    compile     libraries.hibernate_validator
+    compile     libraries.lombok
+
+    // test
+    testCompile libraries.assertj
+    testCompile libraries.jmockit
+    testCompile libraries.testng
+}
+
+sonarRunner {
+    sonarProperties {
+        property 'sonar.exclusions', [
+            '**/jp/ac/tohoku/ecei/sb/gprdb/system/app/DefaultApplicationSource.java',
+            '**/jp/ac/tohoku/ecei/sb/gprdb/system/bean/AbstractIdentifiable.java',
+            '**/jp/ac/tohoku/ecei/sb/gprdb/system/beanl/AbstractVersioned.java',
+            '**/jp/ac/tohoku/ecei/sb/gprdb/dataset/id/IdentifierConfig.java',
+            '**/jp/ac/tohoku/ecei/sb/gprdb/dataset/id/IdentifierInfoEntity.java',
+            '**/jp/ac/tohoku/ecei/sb/gprdb/dataset/id/IdentifierMappingEntity.java',
+            '**/jp/ac/tohoku/ecei/sb/gprdb/dataset/id/IdentifierMappingTypeImpl.java',
+            '**/jp/ac/tohoku/ecei/sb/gprdb/dataset/pair/GenePairRelationConfig.java',
+            '**/jp/ac/tohoku/ecei/sb/gprdb/dataset/pair/GenePairRelationMappingImpl.java',
+            '**/jp/ac/tohoku/ecei/sb/gprdb/dataset/pair/GenePairRelationTableColumnImpl.java',
+            '**/jp/ac/tohoku/ecei/sb/gprdb/dataset/pair/GenePairRelationTableImpl.java',
+        ].join(',')
+    }
+}

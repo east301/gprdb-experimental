@@ -1,0 +1,25 @@
+///
+/// Build settings for gprdb project.
+///
+
+include ':gprdb'
+
+include ':gprdb-api'
+include ':gprdb-impl'
+
+include ':gprdb-shared'
+
+include ':gprdb-cli'
+include ':gprdb-server'
+
+include ':gprdb-plugin-atted'
+include ':gprdb-plugin-hprd'
+include ':gprdb-plugin-identifiers-dot-org'
+include ':gprdb-plugin-ncbi'
+
+include ':gprdb-html-default'
+
+include ':resource'
+
+include ':doc'
+include ':javadoc'

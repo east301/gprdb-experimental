@@ -1,0 +1,74 @@
+///
+/// Build script for html-default module.
+///
+
+// ================================================================================
+// build script
+// ================================================================================
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.bitbucket.grimrose:gradle-obake-plugin:0.5'
+    }
+}
+
+
+// ================================================================================
+// Dependencies
+// ================================================================================
+
+apply from: "${rootProject.projectDir}/gradle/java.gradle"
+
+dependencies {
+    // CSS
+    compile ('org.webjars.bower:foundation:5.5.2') {
+        exclude module: 'jquery-placeholder'
+        exclude module: 'modernizr'
+    }
+
+    // JS
+    compile 'org.webjars.bower:StickyTableHeaders:0.1.17'
+    compile 'org.webjars.bower:jquery:2.1.4'
+    compile 'org.webjars.bower:lodash:3.10.1'
+    compile 'org.webjars.bower:springy:2.7.1'
+    compile 'org.webjars.bower:typeahead.js:0.11.1'
+    compile 'org.webjars.bower:vue:0.12.7'
+    compile 'org.webjars.npm:js-cookie:2.0.3'
+
+    // font
+    compile 'org.webjars.bower:font-awesome:4.4.0'
+
+    // test
+    testCompile libraries.assertj
+    testCompile libraries.guava
+    testCompile libraries.pebble
+    testCompile libraries.lombok
+    testCompile libraries.phantomjsdriver
+    testCompile libraries.selenium
+    testCompile libraries.spring_boot_test
+    testCompile libraries.spring_boot_web
+    testCompile libraries.testng
+}
+
+
+// ================================================================================
+// Test
+// ================================================================================
+
+apply plugin: 'obake'
+
+if (!project.hasProperty('firefoxEnabled')) {
+    test.dependsOn preparePhantomJS
+}
+
+processTestResources {
+    filesMatching('**/selenium.properties') {
+        expand (
+            browser: project.hasProperty('firefoxEnabled') ? 'firefox' : 'phantomjs',
+            projectDirectory: projectDir
+        )
+    }
+}

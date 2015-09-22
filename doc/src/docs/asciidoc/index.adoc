@@ -1,0 +1,47 @@
+= gprdb ({project-version}-{project-git-commit})
+
+:author:                Shu Tadaka
+:authorinitials:        st
+:keywords:              gene, gene-pair relation, database, framework
+:description:           gprdb is a simple and flexible framework for construction of gene-pair relation databases
+:revnumber:             {project-git-commit}
+:homepage:              https://bitbucket.org/east301/gprdb
+:source:                https://bitbucket.org/east301/gprdb
+:lang:                  en
+:source-highlighter:    coderay
+:sectnums:
+:toc2:
+
+:numbered:
+:leveloffset: 1
+
+
+include::license/index.adoc[]
+
+<<<
+
+include::overview/index.adoc[]
+
+<<<
+
+include::tutorial/index.adoc[]
+
+<<<
+
+include::configuration/index.adoc[]
+
+<<<
+
+include::customization/index.adoc[]
+
+<<<
+
+include::deployment/index.adoc[]
+
+<<<
+
+include::development/index.adoc[]
+
+<<<
+
+include::contribution/index.adoc[]

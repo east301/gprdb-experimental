@@ -1,0 +1,26 @@
+///
+/// Build script for application (executable) projects.
+///
+
+// ================================================================================
+// application plugin
+// ================================================================================
+
+apply plugin: 'application'
+
+run {
+    environment 'SPRING_CONFIG_LOCATION', "${rootProject.projectDir}/application.yml"
+
+    if (project.hasProperty('args')) {
+        args project.args.split('\\s+')
+    }
+}
+
+
+// ================================================================================
+// spring-boot
+// ================================================================================
+
+apply plugin: 'spring-boot'
+
+bootRepackage.enabled = project.hasProperty("bootRepackageEnabled")

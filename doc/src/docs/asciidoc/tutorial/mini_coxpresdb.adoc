@@ -1,0 +1,6 @@
+Construction of mini-COXPRESdb
+------------------------------
+
+This tutorial shows how to use gprdb framework through construction of mini-COXPRESdb.
+
+(to be written)

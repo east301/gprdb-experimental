@@ -1,0 +1,112 @@
+///
+/// Build script for resource module.
+///
+/// NOTE:
+///   * Do not add reference to this project.
+///   * Run ./gprdb assemble :resource:generateDependencyLicenseReport after adding new dependencies.
+///     `gprdb-dependency-license.json` will be updated.
+///
+
+// ================================================================================
+// build classpath
+// ================================================================================
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.fasterxml.jackson.core:jackson-databind:2.6.1'
+        classpath 'com.smokejumperit.gradle.license:Gradle-License-Report:0.0.2'
+        classpath 'org.jsoup:jsoup:1.8.3'
+    }
+}
+
+
+// ================================================================================
+// dependencies
+// ================================================================================
+
+apply from: "${rootProject.projectDir}/gradle/java.gradle"
+
+dependencies {
+    compile rootProject.subprojects.findAll { it.name != 'resource' } 
+}
+
+
+// ================================================================================
+// License report
+// ================================================================================
+
+apply plugin: 'license-report'
+
+task generateDependencyLicenseReport() {
+    def rootRoot = rootProject.projectDir
+    def staticInput = "${project.projectDir}/gprdb-dependency-license-static.json"
+    def dest = "${project.projectDir}/gprdb-dependency-license.json"
+
+    inputs.files files("$rootRoot/*/build.gradle") + files("$rootRoot/gradle/java.gradle") + files(staticInput)
+    outputs.file dest
+
+    doLast {
+        //
+        tasks.dependencyLicenseReport.execute()
+
+        //
+        def keyMap = [
+            'Name': 'name',
+            'Description': 'description',
+            'Module Version': 'version',
+            'Version': 'version',
+            'Project URL': 'projectUrl',
+            'License': 'license',
+            'License URL': 'licenseUrl'
+        ]
+        def newContainer = {
+            def result = [:]
+            keyMap.each { result[it.value] = null }
+            return result
+        }
+
+        def containers = [:]
+        ['compile', 'runtime'].each {
+            def source = "${project.buildDir}/reports/dependency-license/${it}.html"
+            def document = org.jsoup.Jsoup.parse(new File(source), 'UTF-8')
+
+            def currentContainer = newContainer()
+            document.select('h4,p,hr').each { element ->
+                if (element.tagName() in ['h4', 'p']) {
+                    def cols = element.text().split(':', 2)
+                    if (cols.length == 2 && cols[0] in keyMap) {
+                        currentContainer[keyMap[cols[0]]] = cols[1].trim()
+                    }
+                } else {
+                    containers[currentContainer['name']] = currentContainer
+                    currentContainer = newContainer()
+                }
+            }
+
+            if (currentContainer['name'] != null) {
+                containers[currentContainer['name']] = currentContainer
+            }
+        }
+
+        //
+        def mapper = new com.fasterxml.jackson.databind.ObjectMapper()
+
+        def entries = (containers.values().findAll { it['name'] != null }) as List
+        entries += mapper.readValue(
+            new File(staticInput),
+            new com.fasterxml.jackson.core.type.TypeReference<java.util.List<java.util.Map<String, String>>>(){})
+
+        //
+        def destFile = new File(dest)
+        if (!destFile.parentFile.exists()) {
+            destFile.parentFile.mkdirs()
+        }
+        destFile.withWriter {
+            entries.sort { it['name'] }
+            it.write(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(entries))
+        }
+    }
+}

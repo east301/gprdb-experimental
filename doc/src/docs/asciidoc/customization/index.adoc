@@ -1,0 +1,6 @@
+Customization
+=============
+
+This section explains internal structure of gprdb framework, and shows how to extend or customize gprdb.
+
+include::internal_structure_overview.adoc[]

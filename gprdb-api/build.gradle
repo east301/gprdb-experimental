@@ -1,0 +1,37 @@
+///
+/// Build script for api module.
+///
+
+apply from: "${rootProject.projectDir}/gradle/java.gradle"
+
+dependencies {
+    // framework
+    compile     libraries.spring_boot
+
+    // IO
+    compile     libraries.jackson
+
+    // CUI
+    compile     libraries.argparse4j
+
+    // rdf
+    compile     libraries.sesame
+
+    // coding helper
+    compile     libraries.guava
+    compile     libraries.hibernate_validator
+    compile     libraries.lombok
+
+    // test
+    testCompile libraries.assertj
+    testCompile libraries.jmockit
+    testCompile libraries.testng
+}
+
+sonarRunner {
+    sonarProperties {
+        property 'sonar.exclusions', [
+            '**/jp/ac/tohoku/ecei/sb/gprdb/system/task/BackgroundTaskState.java',
+        ].join(',')
+    }
+}

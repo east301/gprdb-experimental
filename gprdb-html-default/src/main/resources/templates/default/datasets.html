@@ -1,0 +1,37 @@
+{% extends "layout" %}
+
+{% block main %}
+  <div class="large-12 columns">
+    <!-- title -->
+    <h1>Available datasets</h1>
+    <!-- /title -->
+
+    <!-- /datasets -->
+    <h3>Available datasets</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Genes</th>
+          <th>Gene page example</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in datasets %}
+          <tr>
+            <td>{{ d.name }}</td>
+            <td>
+              <a href="/datasets/{{ d.id }}/genes"> {{ d.numGenes }} genes</a>
+            </td>
+            <td>
+              {% set g = d.genes.get(loop.index % d.numGenes) %}
+              {% set t = d.relationTypes[0] %}
+              <a href="/datasets/{{ d.id }}/{{ g.id }}/{{ t.id }}/table">{{ g.name|orElse(g.id) }} - {{ t.shortName }}</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <!-- /datasets -->
+  </div>
+{% endblock %}

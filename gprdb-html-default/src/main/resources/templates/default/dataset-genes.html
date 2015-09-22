@@ -1,0 +1,94 @@
+{% extends "layout" %}
+
+{% block css %}
+  <style>
+    .pull-left { float: left; }
+    .pull-right { float: right; }
+    .centered { text-align: center; }
+  </style>
+{% endblock %}
+
+{% block main %}
+  <div class="large-12 columns">
+    <!-- navigation -->
+    <nav class="breadcrumbs">
+      <a href="#" data-dropdown="dataset-dropdown">{{ dataset.name }}</a>
+    </nav>
+
+    <ul id="dataset-dropdown" class="f-dropdown" data-dropdown-content="content">
+      {% for d in global.datasets %}
+        <li>
+          <a href="/datasets/{{ d.id }}/genes">{{ d.name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+    <!-- /navigation -->
+
+    <!-- spacer -->
+    <div class="vertical-spacer"></div>
+    <!-- /spacer -->
+
+    <!-- title -->
+    <h1>{{ dataset.name }}</h1>
+    <!-- /title -->
+
+    <!-- table -->
+    <div class="centered">
+      {% if previousPageIndex > 0 %}
+        <a class="button small radius pull-left" href="/datasets/{{ dataset.id }}/genes/page:{{ previousPageIndex + 1 }}">Previous</a>
+      {% endif %}
+      {% if nextPageIndex > 0 %}
+        <a class="button small radius pull-right" href="/datasets/{{ dataset.id }}/genes/page:{{ nextPageIndex + 1 }}">Next</a>
+      {% endif %}
+    </div>
+
+    <table style="width: 100%;">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for g in genes %}
+          {% set gl = loop %}
+          <tr>
+            <td>
+              {% if g.link|present %}
+              <a href="{{ g.link|innerValue }}" target="_blank">
+                {{ g.body }} <i class="fa fa-external-link"></i>
+              </a>
+              {% else %}
+                {{g.id}}
+              {% endif %}
+            </td>
+            <td>{{ g.name|orElse("") }}</td>
+            <td>{{ g.description|orElse("") }}</td>
+            <td>
+              {% for t in dataset.relationTypes %}
+                <a class="button tiny radius" href="/datasets/{{ dataset.id }}/{{ g.id }}/{{ t.id }}/table">{{ t.shortName }}</a>
+              {% endfor %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="centered">
+      {% if previousPageIndex > 0 %}
+        <a class="button small radius pull-left" href="/datasets/{{ dataset.id }}/genes/page:{{ previousPageIndex + 1 }}">Previous</a>
+      {% endif %}
+      {% if nextPageIndex > 0 %}
+        <a class="button small radius pull-right" href="/datasets/{{ dataset.id }}/genes/page:{{ nextPageIndex + 1 }}">Next</a>
+      {% endif %}
+    </div>
+    <!-- /table -->
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script src="/webjars/StickyTableHeaders/0.1.17/js/jquery.stickytableheaders.min.js"></script>
+  <script>(function ($) { $("table").stickyTableHeaders(); })(jQuery);</script>
+{% endblock %}

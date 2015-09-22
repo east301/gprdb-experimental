@@ -1,0 +1,175 @@
+{% extends "layout-fullWidth" %}
+
+{% macro generateRelationTableLink(name, dataset, guideGene, relationType, upTo=upTo) %}
+  <a href="/datasets/{{ dataset.id }}/{{ guideGene.id }}/{{ relationType.id }}/table{% if upTo != 100 %}/upto:{{ upTo }}{% endif %}">{{ name | raw }}</a>
+{% endmacro %}
+
+{% macro generateChangeNumGenesButton(num, d=guideDataset, g=guideGene, t=relationType, r=table.rowSize) %}
+  {% if d.numGenes >= num %}
+    <a href="/datasets/{{ d.id }}/{{ g.id }}/{{ t.id }}/table/upto:{{ num }}" class="button tiny radius {% if r != num %}secondary{% endif %}">{{ num }}</a>
+  {% endif %}
+{% endmacro %}
+
+{% macro generateCustomColumnHeaders(position, table=table) %}
+  {% for c in table.customColumns %}
+    {% if c.position.toString() == position %}
+      <th>{{ c.name }}</th>
+    {% endif %}
+  {% endfor %}
+{% endmacro %}
+
+{% macro generateCustomColumnCell(position, interactingGene, table=table) %}
+  {% for c in table.customColumns %}
+    {% if c.position.toString() == position %}
+      <td>{{ c.getCellAsHtml(interactingGene) | raw }}</td>
+    {% endif %}
+  {% endfor %}
+{% endmacro %}
+
+{% block css %}
+  <style>
+    .relation-strength {
+      text-align: right;
+    }
+    fieldset {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 10px;
+      padding-bottom: 0;
+    }
+  </style>
+{% endblock %}
+
+{% block main %}
+  <div class="large-12 columns">
+    <!-- navigation -->
+    <nav class="breadcrumbs">
+      <a href="#" data-dropdown="dataset-dropdown">{{ guideDataset.name }}</a>
+      <a href="#" data-dropdown="relation-type-dropdown">{{ relationType.shortName }}</a>
+    </nav>
+
+    <ul id="dataset-dropdown" class="f-dropdown" data-dropdown-content="content">
+      {% for d in global.datasets %}
+        {% if (d.genes contains guideGene) and (d.relationTypes contains relationType) %}
+          <li>{{ generateRelationTableLink(d.name, d, guideGene, relationType) }}</li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+
+    <ul id="relation-type-dropdown" class="f-dropdown" data-dropdown-content="content">
+      {% for t in guideDataset.relationTypes %}
+        <li>
+          <a href="/datasets/{{ guideDataset.id }}/{{ guideGene.id }}/{{ t.id }}/table">{{ t.shortName }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+    <!-- /navigation -->
+
+    <!-- spacer -->
+    <div class="vertical-spacer"></div>
+    <!-- /spacer -->
+
+    <!-- title -->
+    <h1>
+      {{ guideGene.name|orElse(guideGene.id) }}
+      {% if guideGene.link|present %}
+        {% for l in guideGene.links %}
+          <a href="{{ l.url }}" target="_blank">
+            {% if l.logoUrl|present %}
+              <img src="{{ l.logoUrl|innerValue }}">
+            {% else %}
+              <i class="fa fa-external-link"></i>
+            {% endif %}
+          </a>
+        {% endfor %}
+      {% endif %}
+
+        <h3>
+          <small>
+            {{ guideGene.id }}
+            {% if guideGene.description|present %} / {{ guideGene.description|innerValue }}{% endif %}
+          </small>
+        </h3>
+    </h1>
+    <!-- /title -->
+
+    <!-- table -->
+    <table class="large-12" style="margin-top: 8px;">
+      <thead>
+      <tr>
+        {{ generateCustomColumnHeaders("BEFORE_RANK") }}
+        <th>Rank</th>
+        {{ generateCustomColumnHeaders("AFTER_RANK") }}
+        <th>Interacting Gene</th>
+        {{ generateCustomColumnHeaders("AFTER_DESCRIPTION") }}
+        {% for c in table.columns %}
+          <th class="relation-strength">
+            <span data-tooltip class="has-tip" title="{{ c.guideGene.name|orElse(c.guideGene.id) }} ({{ c.guideGene.id }})">
+              <img src="/static/default/taxonomy-icon/{{ c.dataset.shortName|lower }}.png"><br>
+              {{ generateRelationTableLink(c.dataset.shortName, c.dataset, c.guideGene, relationType) }}
+            </span>
+          </th>
+        {% endfor %}
+        {{ generateCustomColumnHeaders("AFTER_RELATION") }}
+      </tr>
+      </thead>
+      <tbody>
+        {% for g in table.guideInteractingGenes %}
+          <tr>
+            {{ generateCustomColumnCell("BEFORE_RANK", g) }}
+            <td>{{ loop.index + 1 }}</td>
+            {{ generateCustomColumnCell("AFTER_RANK", g) }}
+            <td>
+              {% if g.link|present %}
+                <a href="{{ g.link.get().getUrl() }}" target="_blank">
+                  {{ g.name|orElse(g.id) }} <i class="fa fa-external-link"></i>
+                </a>
+              {% else %}
+                {{ g.name|orElse(g.id) }}
+              {% endif %}
+            </td>
+            {{ generateCustomColumnCell("AFTER_DESCRIPTION", g) }}
+            {% for c in table.columns %}
+              <td class="relation-strength">
+                {% for m in c.relations.get(g) %}
+                  <span data-tooltip class="has-tip" title="{{ m.gene.name|orElse(m.gene.id) }} ({{ m.gene.id }})">
+                    {{ generateRelationTableLink(relationType.formatter.toDecoratedText(m.strength), c.dataset, m.gene, relationType) }}
+                  </span>
+                  <br>
+                {% endfor %}
+              </td>
+            {% endfor %}
+            {{ generateCustomColumnCell("AFTER_RELATION", g) }}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <p>
+      <a href="http://dbarchive.biosciencedbc.jp/en/taxonomy-icon/desc.html" target="_blank">
+        Taxonomy Icon &copy; Database Center for Life Science licensed under CC Attribution 2.1 Japan
+        <i class="fa fa-external-link"></i>
+      </a>
+    </p>
+    <!-- /table -->
+
+    <!-- # of genes -->
+    <p>
+      change # of genes:
+      {{ generateChangeNumGenesButton(100) }}
+      {{ generateChangeNumGenesButton(200) }}
+      {{ generateChangeNumGenesButton(300) }}
+      {{ generateChangeNumGenesButton(500) }}
+      {{ generateChangeNumGenesButton(1000) }}
+      {{ generateChangeNumGenesButton(2000) }}
+    </p>
+    <!-- /# of genes -->
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script src="/webjars/StickyTableHeaders/0.1.17/js/jquery.stickytableheaders.min.js"></script>
+  <script>(function ($) { $(function () { $("table").stickyTableHeaders(); }); })(jQuery);</script>
+{% endblock %}

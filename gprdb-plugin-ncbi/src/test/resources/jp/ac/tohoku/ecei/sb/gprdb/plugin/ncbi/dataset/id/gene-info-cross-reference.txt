@@ -1,0 +1,1 @@
+3702	814629	AT2G01050	AT2G01050	F23H14.2|F23H14_2	TAIR:AT2G01050	2	-	zinc ion binding / nucleic acid binding protein	protein-coding	-	-	-	-	20150705
