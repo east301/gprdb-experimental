@@ -1,0 +1,3 @@
+[submodule "vendor/asciidoctor-fopub"]
+	path = vendor/asciidoctor-fopub
+	url = https://github.com/asciidoctor/asciidoctor-fopub.git
