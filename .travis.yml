@@ -1,0 +1,25 @@
+###
+### travis-ci configuration
+###
+
+language: java
+
+os:
+  - linux
+  - osx
+
+sudo: required 
+
+install:
+  - "[ $TRAVIS_OS_NAME = 'linux' ] && jdk_switcher use oraclejdk8 || return 0"
+  - "[ $TRAVIS_OS_NAME = 'linux' ] && sudo apt-get update || return 0"
+  - "[ $TRAVIS_OS_NAME = 'linux' ] && sudo apt-get install -y libc6:i386 libncurses5:i386 libstdc++6:i386 libfreetype6:i386 libfontconfig:i386 || return 0"
+  - "[ $TRAVIS_OS_NAME = 'osx' ] && brew install caskroom/cask/brew-cask || return 0"
+  - "[ $TRAVIS_OS_NAME = 'osx' ] && brew cask install java || return 0"
+  - java -version
+
+script:
+  - ./gradlew test
+  - ./gradlew :doc:asciidoc
+  - ./gradlew :javadoc:javadoc
+  - ./gradlew :gprdb:distZip
