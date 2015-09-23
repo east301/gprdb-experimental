@@ -1,0 +1,33 @@
+###
+### AppVeyor configuration
+###
+
+os: Windows Server 2012
+
+branches:
+  except:
+    - gh-pages
+
+skip_tags: true
+
+build: off
+
+environment:
+  global:
+    CYG_BASH: C:\cygwin\bin\bash
+    PROJ_DIR: /cygdrive/c/projects/gprdb-experimental
+  matrix:
+    - JAVA_HOME: C:\Program Files\Java\jdk1.8.0
+    - JAVA_HOME: C:\Program Files (x86)\Java\jdk1.8.0
+
+before_build:
+  - '%CYG_BASH% -c "java -version"'
+
+build_script:
+  - '%CYG_BASH% -c "cd $PROJ_DIR && ./gradlew assemble -x :doc:asciidoctorPdf -x javadoc:javadoc -s"'
+
+test_script:
+  - '%CYG_BASH% -c "cd $PROJ_DIR && ./gradlew test -s"'
+
+cache:
+  - C:\Users\appveyor\.gradle
