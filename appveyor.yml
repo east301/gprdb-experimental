@@ -21,13 +21,15 @@ environment:
     - JAVA_HOME: C:\Program Files (x86)\Java\jdk1.8.0
 
 before_build:
+  - git submodule init
+  - git submodule update
   - '%CYG_BASH% -c "java -version"'
 
 build_script:
-  - '%CYG_BASH% -c "cd $PROJ_DIR && ./gradlew assemble -x :doc:asciidoctorPdf -x javadoc:javadoc -s"'
+  - '%CYG_BASH% -c "cd $PROJ_DIR && ./gradlew :gprdb-impl:test -s"'
 
 test_script:
-  - '%CYG_BASH% -c "cd $PROJ_DIR && ./gradlew test -s"'
+  - '%CYG_BASH% -c "cd $PROJ_DIR && ./gradlew :gprdb-impl:test -s"'
 
 cache:
   - C:\Users\appveyor\.gradle

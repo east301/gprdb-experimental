@@ -15,6 +15,8 @@
 
 package jp.ac.tohoku.ecei.sb.gprdb.io;
 
+import com.google.common.base.StandardSystemProperty;
+import com.google.common.base.Strings;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
 import mockit.Verifications;
@@ -37,28 +39,64 @@ public class StorageManagerImplTest {
     @Mocked
     private ContextRefreshedEvent event;
 
+    private static boolean isWindows() {
+        return Strings.nullToEmpty(StandardSystemProperty.OS_NAME.value()).toLowerCase().contains("win");
+    }
+
     ///
     /// getFile
     ///
 
     @Test
-    public void getFile_returns_correct_result() {
-        StorageManagerImpl manager = new StorageManagerImpl(new File("/root"), true);
-        assertThat(manager.getFile("foo", "bar", "baz").getAbsolutePath())
-            .isEqualTo("/root/foo/bar/baz");
+    public void getFile_returns_correct_result__windows() {
+        if (isWindows()) {
+            StorageManagerImpl manager = new StorageManagerImpl(new File("C:\\root"), true);
+            assertThat(manager.getFile("foo", "bar", "baz").getAbsolutePath()).isEqualTo("C:\\root\\foo\\bar\\baz");
+        }
     }
 
     @Test
-    public void getFile_returns_correct_result__special_directory_name() {
-        StorageManagerImpl manager = new StorageManagerImpl(new File("/root"), true);
-        assertThat(manager.getFile("foo", "..", "bar")).isEqualTo(new File("/root/bar"));
+    public void getFile_returns_correct_result__unix() {
+        if (!isWindows()) {
+            StorageManagerImpl manager = new StorageManagerImpl(new File("/root"), true);
+            assertThat(manager.getFile("foo", "bar", "baz").getAbsolutePath()).isEqualTo("/root/foo/bar/baz");
+        }
     }
 
+    @Test
+    public void getFile_returns_correct_result__special_directory_name__windows() {
+        if (isWindows()) {
+            StorageManagerImpl manager = new StorageManagerImpl(new File("C:\\root"), true);
+            assertThat(manager.getFile("foo", "..", "bar").getAbsolutePath()).isEqualTo("C:\\root\\bar");
+        }
+    }
+
+    @Test
+    public void getFile_returns_correct_result__special_directory_name__unix() {
+        if (!isWindows()) {
+            StorageManagerImpl manager = new StorageManagerImpl(new File("/root"), true);
+            assertThat(manager.getFile("foo", "..", "bar").getAbsolutePath()).isEqualTo("/root/bar");
+        }
+    }
 
     @Test(expectedExceptions = RuntimeException.class)
-    public void getFile_returns_correct_result__outside_of_storage() {
-        StorageManagerImpl manager = new StorageManagerImpl(new File("/root"), true);
-        manager.getFile("foo", "..", "..", "...", "bar");
+    public void getFile_returns_correct_result__outside_of_storage__windows() {
+        if (isWindows()) {
+            StorageManagerImpl manager = new StorageManagerImpl(new File("C:\\root"), true);
+            manager.getFile("foo", "..", "..", "...", "bar");
+        } else {
+            throw new RuntimeException("skipped");
+        }
+    }
+
+    @Test(expectedExceptions = RuntimeException.class)
+    public void getFile_returns_correct_result__outside_of_storage__unix() {
+        if (!isWindows()) {
+            StorageManagerImpl manager = new StorageManagerImpl(new File("/root"), true);
+            manager.getFile("foo", "..", "..", "...", "bar");
+        } else {
+            throw new RuntimeException("skipped");
+        }
     }
 
 

@@ -68,7 +68,7 @@ processTestResources {
     filesMatching('**/selenium.properties') {
         expand (
             browser: project.hasProperty('firefoxEnabled') ? 'firefox' : 'phantomjs',
-            projectDirectory: projectDir
+            projectDirectory: projectDir.replace('\\', '\\\\')
         )
     }
 }
