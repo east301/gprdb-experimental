@@ -1,5 +1,9 @@
 gprdb
 =====
 
+image:https://travis-ci.org/east301/gprdb-experimental.svg?branch=master["Build Status", link="https://travis-ci.org/east301/gprdb-experimental"]
+image:https://api.codacy.com/project/badge/6ebfcdede1964b34a26a5b22aad2011c["Codacy code quality", link="https://www.codacy.com/app/east301/gprdb-experimental"]
+image:httpis://img.shields.io/badge/license-APACHE2-blue.svg["Apache License Version 2.0", link="https://www.apache.org/licenses/LICENSE-2.0.html"]
+
 gprdb is a simple and flexible framework for construction of gene-pair relation databases.
 Please refer to gprdb's documentation for detailed usage.
